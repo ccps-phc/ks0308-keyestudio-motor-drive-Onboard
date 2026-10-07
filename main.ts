@@ -4,26 +4,27 @@ function right (speed: number, p15: number, p16: number) {
     pins.digitalWritePin(DigitalPin.P16, p16)
 }
 radio.onReceivedNumber(function (receivedNumber) {
+    pins.digitalWritePin(DigitalPin.P14, 1)
     if (receivedNumber == 1) {
-        pins.digitalWritePin(DigitalPin.P14, 1)
         forward()
     } else if (receivedNumber == 2) {
-        pins.digitalWritePin(DigitalPin.P14, 1)
         backward()
     } else if (receivedNumber == 4) {
-        pins.digitalWritePin(DigitalPin.P14, 1)
         turnleft()
     } else if (receivedNumber == 3) {
-        pins.digitalWritePin(DigitalPin.P14, 1)
         turnRight()
     } else {
-        pins.digitalWritePin(DigitalPin.P14, 0)
+        stop()
     }
 })
 function left (speed: number, P13: number, P12: number) {
     pins.analogWritePin(AnalogPin.P1, speed)
     pins.digitalWritePin(DigitalPin.P13, P13)
     pins.digitalWritePin(DigitalPin.P12, P12)
+}
+function stop () {
+    left(500, 0, 0)
+    right(500, 0, 0)
 }
 function rightForward () {
     right(900, 1, 0)
@@ -54,4 +55,4 @@ function turnleft () {
     right(300, 1, 0)
 }
 radio.setGroup(67)
-pins.digitalWritePin(DigitalPin.P14, 0)
+pins.digitalWritePin(DigitalPin.P14, 1)
